@@ -11,6 +11,8 @@ const initializeWatcher = async () => {
   if (savedVariablesPath) {
     log.info(`Initializing watcher at ${savedVariablesPath}`);
 
+    parseSavedVariables(savedVariablesPath);
+
     if (watcher) {
       log.info('Closing Watcher...');
       await watcher.close();

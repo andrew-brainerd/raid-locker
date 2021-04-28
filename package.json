@@ -24,6 +24,7 @@
     "electron-log": "^4.2.4",
     "electron-store": "^6.0.0",
     "luaparse": "^0.3.0",
+    "moment": "^2.29.1",
     "ramda": "^0.27.1",
     "rimraf": "^3.0.2"
   },
