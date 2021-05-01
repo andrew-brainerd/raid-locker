@@ -5,11 +5,16 @@ const moment = require('moment');
 const includedProperties = ['secondsRemaining', 'name'];
 
 function getInstanceText(instance) {
-  return `${instance.resetDate} ${instance.name}\n`;
+  let spaces = '';
+  for (let i = 0; i < 18 - instance.name.length; i++) {
+    spaces += ' ';
+  }
+
+  return `${instance.name} ${spaces} | ${instance.resetDate} @ 10AM\n`;
 }
 
 function getTimeRemaining(secondsRemaining) {
-  return moment().add(secondsRemaining, 'seconds').format('MM/DD/YY');
+  return moment().add(secondsRemaining, 'seconds').format('dddd MM/DD/YY');
 }
 
 function parseSavedVariables(savedVariablesPath) {
@@ -43,10 +48,8 @@ function parseSavedVariables(savedVariablesPath) {
         }
       });
 
-      // console.log(instanceData);
-
       return instanceData;
-    });
+    }).sort(sortInstances);
 
     console.log(lockedInstances);
     writeInstancesToFile(lockedInstances);
@@ -61,6 +64,10 @@ function getInstanceData(data) {
 
 function removeQuotes(str) {
   return str.replace(/"/g, '');
+}
+
+function sortInstances(i, j) {
+  return moment(i.resetDate).isBefore(j.resetDate);
 }
 
 function writeInstancesToFile(instances) {
